@@ -1,0 +1,102 @@
+/* Base styles & resets */
+
+html {
+  font-family: 'Roboto Slab', serif;
+  color: rgb(46, 45, 48);
+}
+
+body {
+  margin: 0;
+}
+
+main {
+  width: 80%;
+  margin: 3rem auto;
+}
+
+a {
+  text-decoration: none;
+  color:rgb(89, 0, 255);
+}
+
+a:hover,
+a:active {
+  color:rgb(232, 90, 245);
+}
+
+ul, ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Global components */
+
+.btn {
+  padding: 0.5rem 1.5rem;
+
+  font: inherit;
+  color: white;
+
+  background-color: rgb(89, 0, 255);
+  border: 1px solid rgb(89, 0, 255);
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn:hover,
+.btn:active {
+  color: white;
+
+  background-color: rgb(71, 4, 196);
+  border-color: rgb(71, 4, 196);
+}
+
+.btn.btn-alt {
+  color:rgb(89, 0, 255);
+
+  background-color: transparent;
+  border-color: transparent;
+}
+
+.btn.btn-alt:hover,
+.btn.btn-alt:active {
+  color:rgb(232, 90, 245);
+}
+
+/* Site-wide content / elements */
+
+#main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 2rem 10%;
+
+  background-color: rgb(89, 0, 255);
+}
+
+#logo a {
+  font-family: 'Roboto', sans-serif;
+  font-size: 2rem;
+  font-weight: bold;
+  color: white;
+}
+
+#main-header ul {
+  display: flex;
+}
+
+#main-header li {
+  margin-left: 2rem;
+}
+
+#main-header nav a {
+  font-size: 1.25rem;
+  color: white;
+}
+
+#main-header nav a:hover,
+#main-header nav a:active {
+  color:rgb(255, 217, 0);
+}
