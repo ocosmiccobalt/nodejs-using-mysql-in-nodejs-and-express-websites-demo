@@ -60,6 +60,20 @@ router.get('/posts/:id', async (req, res) => {
   res.render('post-detail', { post: postData });
 });
 
+router.get('/posts/:id/edit', async (req, res) => {
+  const query = `
+    SELECT * FROM posts WHERE ID = ?
+  `;
+
+  const [posts] = await db.query(query, [req.params.id]);
+
+  if (!posts || posts.length === 0) {
+    return res.status(404).render('404');
+  }
+
+  res.render('update-post', { post: posts[0] });
+});
+
 router.get('/new-post', async (req, res) => {
   const [authors] = await db.query('SELECT * FROM authors');
   res.render('create-post', { authors: authors });
