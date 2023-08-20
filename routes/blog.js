@@ -17,6 +17,38 @@ router.get('/posts', async (req, res) => {
   res.render('posts-list', { posts: posts });
 });
 
+// router.get('/posts/:id', async (req, res) => {
+//   const postId = req.params.id;
+//   const query = `
+//     SELECT posts.*, authors.name AS author_name, authors.email AS author_email FROM posts
+//     INNER JOIN authors ON posts.author_id = authors.id
+//     WHERE posts.id = ${postId}
+//   `;
+
+//   const [posts] = await db.query(query);
+//   if (posts.length > 0) {
+//     return res.render('post-detail', { post: posts[0] });
+//   }
+
+//   res.status(404).render('404');
+// });
+
+router.get('/posts/:id', async (req, res) => {
+  const query = `
+    SELECT posts.*, authors.name AS author_name, authors.email AS author_email FROM posts
+    INNER JOIN authors ON posts.author_id = authors.id
+    WHERE posts.id = ?
+  `;
+
+  const [posts] = await db.query(query, [req.params.id]);
+
+  if (!posts || posts.length === 0) {
+    return res.status(404).render('404');
+  }
+
+  res.render('post-detail', { post: posts[0] });
+});
+
 router.get('/new-post', async (req, res) => {
   const [authors] = await db.query('SELECT * FROM authors');
   res.render('create-post', { authors: authors });
