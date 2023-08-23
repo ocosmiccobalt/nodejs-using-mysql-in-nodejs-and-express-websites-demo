@@ -62,7 +62,7 @@ router.get('/posts/:id', async (req, res) => {
 
 router.get('/posts/:id/edit', async (req, res) => {
   const query = `
-    SELECT * FROM posts WHERE ID = ?
+    SELECT * FROM posts WHERE id = ?
   `;
 
   const [posts] = await db.query(query, [req.params.id]);
@@ -105,6 +105,15 @@ router.post('/posts', async (req, res) => {
   await db.query('INSERT INTO posts (title, summary, body, author_id) VALUES (?)', [
     data
   ]);
+  res.redirect('/posts');
+});
+
+router.post('/posts/:id/delete', async (req, res) => {
+  const query = `
+    DELETE FROM posts WHERE id = ?
+  `;
+
+  await db.query(query, [req.params.id]);
   res.redirect('/posts');
 });
 
