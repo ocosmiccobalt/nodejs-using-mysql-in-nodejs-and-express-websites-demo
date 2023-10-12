@@ -17,22 +17,6 @@ router.get('/posts', async (req, res) => {
   res.render('posts-list', { posts: posts });
 });
 
-// router.get('/posts/:id', async (req, res) => {
-//   const postId = req.params.id;
-//   const query = `
-//     SELECT posts.*, authors.name AS author_name, authors.email AS author_email FROM posts
-//     INNER JOIN authors ON posts.author_id = authors.id
-//     WHERE posts.id = ${postId}
-//   `;
-
-//   const [posts] = await db.query(query);
-//   if (posts.length > 0) {
-//     return res.render('post-detail', { post: posts[0] });
-//   }
-
-//   res.status(404).render('404');
-// });
-
 router.get('/posts/:id', async (req, res) => {
   const query = `
     SELECT posts.*, authors.name AS author_name, authors.email AS author_email FROM posts
@@ -74,22 +58,6 @@ router.get('/posts/:id/edit', async (req, res) => {
   res.render('update-post', { post: posts[0] });
 });
 
-router.post('/posts/:id/edit', async (req, res) => {
-  const query = `
-    UPDATE posts SET title = ?, summary = ?, body = ?
-    WHERE id = ?
-  `;
-
-  await db.query(query, [
-    req.body.title,
-    req.body.summary,
-    req.body.content,
-    req.params.id
-  ]);
-
-  res.redirect('/posts');
-});
-
 router.get('/new-post', async (req, res) => {
   const [authors] = await db.query('SELECT * FROM authors');
   res.render('create-post', { authors: authors });
@@ -105,6 +73,22 @@ router.post('/posts', async (req, res) => {
   await db.query('INSERT INTO posts (title, summary, body, author_id) VALUES (?)', [
     data
   ]);
+  res.redirect('/posts');
+});
+
+router.post('/posts/:id/edit', async (req, res) => {
+  const query = `
+    UPDATE posts SET title = ?, summary = ?, body = ?
+    WHERE id = ?
+  `;
+
+  await db.query(query, [
+    req.body.title,
+    req.body.summary,
+    req.body.content,
+    req.params.id
+  ]);
+
   res.redirect('/posts');
 });
 
